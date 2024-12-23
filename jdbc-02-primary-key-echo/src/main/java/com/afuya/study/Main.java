@@ -11,7 +11,9 @@ import java.sql.*;
  */
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//        Class.forName("com.mysql.cj.jdbc.Driver");
+        // 从JDK6开始，不再需要显式地调用 `Class.forName()` 来加载 JDBC 驱动程序，
+        // 只要在类路径中集成了对应的jar文件，会自动在初始化时注册驱动程序
+        // Class.forName("com.mysql.cj.jdbc.Driver");
 
         String url = "jdbc:mysql://localhost:3306/db_test";
         String user = "root";
