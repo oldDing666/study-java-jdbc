@@ -4,33 +4,25 @@ import java.sql.*;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args ) throws ClassNotFoundException, SQLException {
-        // 注册驱动
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        // 获取连接
-        String url = "jdbc:mysql://localhost:3306/db-test";
+public class App {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        String url = "jdbc:mysql://localhost:3306/db_test";
         String user = "root";
         String password = "root";
         Connection connection = DriverManager.getConnection(url, user, password);
-        // 创建句柄
-        String sql = "select * from t_emp";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        // 执行sql
-        ResultSet resultSet = preparedStatement.executeQuery();
-        // 解析结果
-        while (resultSet.next()) {
-            System.out.println("emp_id: " + resultSet.getInt("emp_id")
-                    + ", emp_name: " + resultSet.getString("emp_name")
-                    + ", emp_salary: " + resultSet.getDouble("emp_salary")
-                    + ", emp_age: " + resultSet.getString("emp_age"));
-        }
 
-        // 关闭资源
-        resultSet.close();
+        String sql = "insert into t_emp(emp_name,emp_salary,emp_age) values(?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        for (int i = 0; i < 10000; i++) {
+            preparedStatement.setString(1, "afuya" + i);
+            preparedStatement.setDouble(2, 10000 + i);
+            preparedStatement.setInt(3, 18 + i);
+            preparedStatement.addBatch();
+        }
+        int[] executed = preparedStatement.executeBatch();
+        System.out.println("批量插入行数："+executed.length);
+
         preparedStatement.close();
         connection.close();
     }
