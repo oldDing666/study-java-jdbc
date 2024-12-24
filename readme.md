@@ -25,6 +25,18 @@ values  ('andy', 777.77, 32),
 
 # 4 事务控制
 
+转账案例
+```sql
+-- 继续在atguigu的库中创建银行表
+CREATE TABLE t_bank(
+   id INT PRIMARY KEY AUTO_INCREMENT COMMENT '账号主键',
+   account VARCHAR(20) NOT NULL UNIQUE COMMENT '账号',
+   money  INT UNSIGNED COMMENT '金额，不能为负值') ;
+   
+INSERT INTO t_bank(account,money) VALUES
+  ('zhangsan',1000),('lisi',1000);
+```
+
 # 5 连接池
 
 # 6 最佳实践
